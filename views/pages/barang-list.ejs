@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= judul %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="container navbar-content">
+        <a href="/" class="logo">Gien<span>Marketplace</span></a>
+
+        <a href="/barang/tambah" class="btn btn-primary">
+            + Jual Barang
+        </a>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <p class="eyebrow">MARKETPLACE LOKAL</p>
+
+        <h1>Temukan barang yang kamu cari.</h1>
+
+        <p class="hero-description">
+            Cari kendaraan, elektronik, dan peralatan rumah dari penjual lokal.
+        </p>
+    </section>
+
+    <section class="catalog">
+        <div class="section-heading">
+            <div>
+                <h2>Barang Pilihan</h2>
+                <p><%= daftarBarang.length %> barang tersedia</p>
+            </div>
+        </div>
+
+        <% if (daftarBarang.length === 0) { %>
+
+            <div class="empty-state">
+                <h3>Belum ada barang</h3>
+
+                <p>
+                    Jadilah yang pertama menambahkan barang di marketplace ini.
+                </p>
+
+                <a href="/barang/tambah" class="btn btn-primary">
+                    Tambah Barang
+                </a>
+            </div>
+
+        <% } else { %>
+
+            <div class="product-grid">
+                <% daftarBarang.forEach(function(barang) { %>
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+    <% if (barang.ada_foto) { %>
+
+        <img
+            src="/barang/foto/<%= barang.id %>"
+            alt="<%= barang.nama_barang %>"
+            class="product-photo"
+        >
+
+    <% } else { %>
+
+        <div class="image-placeholder">
+            <span>Gien</span>
+            <small>Marketplace</small>
+        </div>
+
+    <% } %>
+</div>
+
+                        <div class="product-info">
+
+                            <span class="category">
+                                <%= barang.kategori %>
+                            </span>
+
+                            <h3><%= barang.nama_barang %></h3>
+
+                            <p class="price">
+                                Rp <%= Number(barang.harga).toLocaleString('id-ID') %>
+                            </p>
+
+                            <div class="product-meta">
+                                <span><%= barang.kondisi %></span>
+                                <span><%= barang.lokasi %></span>
+                            </div>
+
+                            <p class="seller">
+                                Penjual: <%= barang.nama_penjual %>
+                            </p>
+
+                            <div class="product-actions">
+
+                                <a
+                                    href="/barang/edit/<%= barang.id %>"
+                                    class="btn btn-outline"
+                                >
+                                    Edit
+                                </a>
+
+                                <form
+                                    action="/barang/hapus/<%= barang.id %>"
+                                    method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus barang ini?')"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger"
+                                    >
+                                        Hapus
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </article>
+
+                <% }); %>
+            </div>
+
+        <% } %>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 GienMarketplace. Marketplace barang lokal.</p>
+    </div>
+</footer>
+
+</body>
+</html>

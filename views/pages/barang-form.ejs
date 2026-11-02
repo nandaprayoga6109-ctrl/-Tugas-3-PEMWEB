@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= judul %> | GienMarketplace</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="container navbar-content">
+        <a href="/" class="logo">Gien<span>Marketplace</span></a>
+
+        <a href="/" class="btn btn-outline">Kembali ke Katalog</a>
+    </div>
+</header>
+
+<main class="container form-page">
+    <section class="form-heading">
+        <p class="eyebrow">GIEN MARKETPLACE</p>
+        <h1><%= judul %></h1>
+        <p>
+            Lengkapi informasi barang agar calon pembeli dapat mengenalnya.
+        </p>
+    </section>
+
+    <form
+        class="product-form"
+        action="<%= mode === 'edit' ? '/barang/edit/' + barang.id : '/barang/tambah' %>"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="form-group">
+            <label for="nama_barang">Nama Barang</label>
+            <input
+                type="text"
+                id="nama_barang"
+                name="nama_barang"
+                value="<%= barang ? barang.nama_barang : '' %>"
+                maxlength="150"
+                required
+            >
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="kategori">Kategori</label>
+                <select id="kategori" name="kategori" required>
+                    <option value="">Pilih kategori</option>
+
+                    <option
+                        value="Kendaraan"
+                        <%= barang && barang.kategori === 'Kendaraan' ? 'selected' : '' %>
+                    >
+                        Kendaraan
+                    </option>
+
+                    <option
+                        value="Barang Elektronik"
+                        <%= barang && barang.kategori === 'Barang Elektronik' ? 'selected' : '' %>
+                    >
+                        Barang Elektronik
+                    </option>
+
+                    <option
+                        value="Peralatan Rumah"
+                        <%= barang && barang.kategori === 'Peralatan Rumah' ? 'selected' : '' %>
+                    >
+                        Peralatan Rumah
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="harga">Harga (Rp)</label>
+                <input
+                    type="number"
+                    id="harga"
+                    name="harga"
+                    min="0"
+                    step="0.01"
+                    value="<%= barang ? barang.harga : '' %>"
+                    required
+                >
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="kondisi">Kondisi Barang</label>
+                <select id="kondisi" name="kondisi" required>
+                    <option value="">Pilih kondisi</option>
+
+                    <option
+                        value="Baru"
+                        <%= barang && barang.kondisi === 'Baru' ? 'selected' : '' %>
+                    >
+                        Baru
+                    </option>
+
+                    <option
+                        value="Bekas"
+                        <%= barang && barang.kondisi === 'Bekas' ? 'selected' : '' %>
+                    >
+                        Bekas
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nama_penjual">Nama Penjual</label>
+                <input
+                    type="text"
+                    id="nama_penjual"
+                    name="nama_penjual"
+                    value="<%= barang ? barang.nama_penjual : '' %>"
+                    maxlength="100"
+                    required
+                >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lokasi">Lokasi</label>
+            <input
+                type="text"
+                id="lokasi"
+                name="lokasi"
+                value="<%= barang ? barang.lokasi : '' %>"
+                maxlength="150"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="deskripsi">Deskripsi Barang</label>
+            <textarea
+                id="deskripsi"
+                name="deskripsi"
+                rows="5"
+                required
+            ><%= barang ? barang.deskripsi : '' %></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="foto">Foto Barang (JPG, PNG, atau WEBP; maksimal 2 MB)</label>
+            <input
+                type="file"
+                id="foto"
+                name="foto"
+                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            >
+            <small>Kosongkan jika tidak ingin mengganti foto saat mengedit.</small>
+        </div>
+
+        <div class="form-actions">
+            <a href="/" class="btn btn-outline">Batal</a>
+
+            <button type="submit" class="btn btn-primary">
+                <%= mode === 'edit' ? 'Simpan Perubahan' : 'Terbitkan Barang' %>
+            </button>
+        </div>
+
+    </form>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 GienMarketplace. Marketplace barang lokal.</p>
+    </div>
+</footer>
+
+</body>
+</html>
